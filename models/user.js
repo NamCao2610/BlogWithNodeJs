@@ -4,6 +4,7 @@ const randomString = require('random-string');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const Post = require('./post');
+const Follow = require('./follow');
 
 const userSchema = mongoose.Schema({
     name: {
@@ -141,7 +142,7 @@ userSchema.pre('save', async function (next) {
 userSchema.pre('remove', async function (next) {
     const user = this;
     await Post.deleteMany({ ownUser: user._id });
-
+    await Follow.deleteMany({ ownUser: user._id });
     next();
 })
 

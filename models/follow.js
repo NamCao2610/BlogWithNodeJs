@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const User = require('../models/user');
 
 const followSchema = mongoose.Schema({
     follow_id: {
@@ -14,6 +15,9 @@ const followSchema = mongoose.Schema({
 }, {
     timestamps: true
 })
+
+//Truoc khi xoa se xoa danh sach nguoi nhan theo doi
+
 
 const Follow = mongoose.model('Follow', followSchema);
 

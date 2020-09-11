@@ -65,11 +65,10 @@ router.delete('/follows/:id', auth, async (req, res) => {
         if (!follow) {
             return res.status(404).send('Not found id!');
         }
-        await follow.remove();
-        const user = follow.follow_id;
-        const usersFollowed = await User.findOne({ _id: user });
-        usersFollowed.usersFollow = usersFollowed.usersFollow.filter(followed => followed._id !== req.user._id);
+        const usersFollowed = await User.findOne({ _id: follow.follow_id });
+        usersFollowed.usersFollow = usersFollowed.usersFollow.filter(followed => followed._id != req.user._id);
         await usersFollowed.save();
+        await follow.remove();
         res.send({ sucess: 'Xoa follow thanh cong' });
     } catch (e) {
         res.status(500).send({ error: e.message });
