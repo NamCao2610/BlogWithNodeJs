@@ -49,6 +49,17 @@ const userSchema = mongoose.Schema({
     avatar: {
         type: Buffer
     },
+    usersFollow: [{
+        _id: {
+            type: String,
+        },
+        name: {
+            type: String,
+        },
+        email: {
+            type: String,
+        }
+    }],
     tokens: [{
         token: {
             type: String,
@@ -65,6 +76,13 @@ const userSchema = mongoose.Schema({
 //Tao 1 property ao cua User noi voi Post
 userSchema.virtual('posts', {
     ref: 'Post',
+    localField: '_id',
+    foreignField: 'ownUser'
+})
+
+//Tao 1 property ao cua USer voi follow
+userSchema.virtual('follows', {
+    ref: 'Follow',
     localField: '_id',
     foreignField: 'ownUser'
 })

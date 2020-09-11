@@ -59,7 +59,7 @@ router.patch('/comments/:id', auth, async (req, res) => {
         return res.status(400).send({ error: 'Vui long nhap dung key' });
     }
     try {
-        const comment = await Comment.findOne({ _id: req.params.id });
+        const comment = await Comment.findOne({ _id: req.params.id, ownUser: req.user._id });
         if (!comment) {
             throw new Error('Khong tim thay id')
         }
@@ -74,7 +74,7 @@ router.patch('/comments/:id', auth, async (req, res) => {
 //Delete comment
 router.delete('/comments/:id', auth, async (req, res) => {
     try {
-        const comment = await Comment.findOne({ _id: req.params.id });
+        const comment = await Comment.findOne({ _id: req.params.id, ownUser: req.user._id });
         if (!comment) {
             throw new Error('Khong tim thay id');
         }
